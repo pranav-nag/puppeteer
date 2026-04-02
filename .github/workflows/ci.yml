@@ -3,6 +3,10 @@ name: CI
 # Declare default permissions as read only.
 permissions: read-all
 
+# TODO: Remove this once all third-party actions natively support Node 24+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 on:
   push:
     branches:
@@ -40,7 +44,8 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Install dependencies
         run: npm ci
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PUPPETEER_SKIP_DOWNLOAD: true
       # Set up GitHub Actions caching for Wireit.
       - uses: google/wireit@9d7c2e5346f8ef1b1ab6014c4e96c74e234f7ed5 # setup-github-actions-caching/v2.0.4
@@ -95,7 +100,8 @@ jobs:
         run: npm ci
       - name: Build website
         working-directory: ./website
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           NODE_OPTIONS: --max-old-space-size=6144
         run: npm run build
       - name: Deploy to GitHub Pages
@@ -110,7 +116,8 @@ jobs:
       - name: Test Algolia if Crawler is blocked
         # Only change on push to main
         if: ${{ github.event_name != 'pull_request'}}
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           CRAWLER_USER_ID: ${{secrets.ALGOLIA_CRAWLER_USER_ID}}
           CRAWLER_API_KEY: ${{secrets.ALGOLIA_CRAWLER_API_KEY}}
           CRAWLER_ID: ${{secrets.ALGOLIA_CRAWLER_ID}}
@@ -121,7 +128,8 @@ jobs:
       - name: Trigger Algolia reindexing
         # Only change on push to main
         if: ${{ github.event_name != 'pull_request'}}
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           CRAWLER_USER_ID: ${{secrets.ALGOLIA_CRAWLER_USER_ID}}
           CRAWLER_API_KEY: ${{secrets.ALGOLIA_CRAWLER_API_KEY}}
           CRAWLER_ID: ${{secrets.ALGOLIA_CRAWLER_ID}}
@@ -146,7 +154,8 @@ jobs:
         run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
       - name: Install dependencies
         run: npm ci
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PUPPETEER_SKIP_DOWNLOAD: true
       - name: Run tests
         run: npm run doctest
@@ -199,7 +208,8 @@ jobs:
         run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
       - name: Install dependencies
         run: npm ci
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PUPPETEER_SKIP_DOWNLOAD: true
       # Set up GitHub Actions caching for Wireit.
       - uses: google/wireit@9d7c2e5346f8ef1b1ab6014c4e96c74e234f7ed5 # setup-github-actions-caching/v2.0.4
@@ -281,7 +291,8 @@ jobs:
         run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
       - name: Install dependencies
         run: npm ci
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PUPPETEER_SKIP_DOWNLOAD: true
       # Set up GitHub Actions caching for Wireit.
       - uses: google/wireit@9d7c2e5346f8ef1b1ab6014c4e96c74e234f7ed5 # setup-github-actions-caching/v2.0.4
@@ -353,13 +364,15 @@ jobs:
         run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
       - name: Install dependencies
         run: npm ci
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PUPPETEER_SKIP_DOWNLOAD: true
       # Set up GitHub Actions caching for Wireit.
       - uses: google/wireit@9d7c2e5346f8ef1b1ab6014c4e96c74e234f7ed5 # setup-github-actions-caching/v2.0.4
 
       - name: Build install test
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PKG_MANAGER: ${{ matrix.pkg_manager }}
         run: ${{ matrix.pkg_manager }} run build -w @puppeteer-test/installation
 
@@ -369,7 +382,8 @@ jobs:
           cache: npm
           node-version: '20.19'
       - name: Test install
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PKG_MANAGER: ${{ matrix.pkg_manager }}
         run: ${{ matrix.pkg_manager }} run test-ci -w @puppeteer-test/installation
 
@@ -400,7 +414,8 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Install dependencies
         run: npm ci
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PUPPETEER_SKIP_DOWNLOAD: true
       - name: Build packages
         run: npm run build --workspace puppeteer
@@ -430,7 +445,8 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Install dependencies
         run: npm ci
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PUPPETEER_SKIP_DOWNLOAD: true
       - name: Run unit tests
         run: |
@@ -451,7 +467,8 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Install dependencies
         run: npm ci
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PUPPETEER_SKIP_DOWNLOAD: true
       - name: Run tests
         run: npm run unit --workspace @puppeteer/ng-schematics
@@ -493,7 +510,8 @@ jobs:
         run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
       - name: Install dependencies
         run: npm ci
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PUPPETEER_SKIP_DOWNLOAD: true
       - name: Build all and schematics
         run: npm run build
@@ -545,7 +563,8 @@ jobs:
         run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
       - name: Install dependencies
         run: npm ci
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PUPPETEER_SKIP_DOWNLOAD: true
       - name: Setup cache for browsers
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4

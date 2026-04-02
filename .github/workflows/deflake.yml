@@ -3,6 +3,10 @@ name: Deflake Puppeteer test
 # Declare default permissions as read only.
 permissions: read-all
 
+# TODO: Remove this once all third-party actions natively support Node 24+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 concurrency:
   group: deflake-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
@@ -56,7 +60,8 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Install dependencies
         run: npm ci
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PUPPETEER_SKIP_DOWNLOAD: true
       # Set up GitHub Actions caching for Wireit.
       - uses: google/wireit@9d7c2e5346f8ef1b1ab6014c4e96c74e234f7ed5 # setup-github-actions-caching/v2.0.4
@@ -72,19 +77,22 @@ jobs:
       - name: Run all tests (MacOS)
         if: ${{ matrix.os == 'macos-15' }}
         run: npm run test -- --test-suite ${{ matrix.suite }} --save-stats-to /tmp/artifacts/${{ github.event_name }}_INSERTID.json
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PUPPETEER_DEFLAKE_TESTS: '${{ inputs.tests }}'
           PUPPETEER_DEFLAKE_RETRIES: ${{ inputs.retries }}
       - name: Run all tests (Windows)
         if: ${{ matrix.os == 'windows-latest' }}
         run: npm run test -- --test-suite ${{ matrix.suite }} --save-stats-to /tmp/artifacts/${{ github.event_name }}_INSERTID.json
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PUPPETEER_DEFLAKE_TESTS: '${{ inputs.tests }}'
           PUPPETEER_DEFLAKE_RETRIES: ${{ inputs.retries }}
       - name: Run all tests (Linux)
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: xvfb-run --auto-servernum npm run test -- --test-suite ${{ matrix.suite }} --save-stats-to /tmp/artifacts/${{ github.event_name }}_INSERTID.json
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PUPPETEER_DEFLAKE_TESTS: '${{ inputs.tests }}'
           PUPPETEER_DEFLAKE_RETRIES: ${{ inputs.retries }}
 
@@ -104,7 +112,8 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Install dependencies
         run: npm ci
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PUPPETEER_SKIP_DOWNLOAD: true
       # Set up GitHub Actions caching for Wireit.
       - uses: google/wireit@9d7c2e5346f8ef1b1ab6014c4e96c74e234f7ed5 # setup-github-actions-caching/v2.0.4
@@ -120,12 +129,14 @@ jobs:
       - name: Run all tests (for non-Linux)
         if: ${{ inputs.os != 'ubuntu-latest' }}
         run: npm run test -- --test-suite ${{ inputs.suite }} --save-stats-to /tmp/artifacts/${{ github.event_name }}_INSERTID.json
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PUPPETEER_DEFLAKE_TESTS: '${{ inputs.tests }}'
           PUPPETEER_DEFLAKE_RETRIES: ${{ inputs.retries }}
       - name: Run all tests (for Linux)
         if: ${{ inputs.os == 'ubuntu-latest' }}
         run: xvfb-run --auto-servernum npm run test -- --test-suite ${{ inputs.suite }} --save-stats-to /tmp/artifacts/${{ github.event_name }}_INSERTID.json
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PUPPETEER_DEFLAKE_TESTS: '${{ inputs.tests }}'
           PUPPETEER_DEFLAKE_RETRIES: ${{ inputs.retries }}

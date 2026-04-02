@@ -2,6 +2,10 @@ name: Check which packages changed
 
 permissions: read-all
 
+# TODO: Remove this once all third-party actions natively support Node 24+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 on:
   workflow_call:
     inputs:
@@ -30,7 +34,8 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Install dependencies
         run: npm ci
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PUPPETEER_SKIP_DOWNLOAD: true
       # Set up GitHub Actions caching for Wireit.
       - uses: google/wireit@9d7c2e5346f8ef1b1ab6014c4e96c74e234f7ed5 # setup-github-actions-caching/v2.0.4

@@ -3,6 +3,10 @@ name: DevTools CI
 # Declare default permissions as read only.
 permissions: read-all
 
+# TODO: Remove this once all third-party actions natively support Node 24+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 on:
   pull_request:
     types: [labeled]
@@ -26,7 +30,8 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Install dependencies
         run: npm ci
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PUPPETEER_SKIP_DOWNLOAD: true
       - name: Build Puppeteer
         run: |

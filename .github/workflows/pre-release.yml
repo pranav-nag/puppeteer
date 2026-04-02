@@ -2,6 +2,10 @@ name: Pre-release
 
 permissions: read-all
 
+# TODO: Remove this once all third-party actions natively support Node 24+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 on:
   push:
     branches:
@@ -32,12 +36,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build all packages
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PUBLISH: 1
         run: |
           npm run build
       - name: Build docs
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PUBLISH: 1
         run: |
           npm run changelog
@@ -49,7 +55,8 @@ jobs:
           npm run docusaurus docs:version $(jq -r .version ../packages/puppeteer/package.json)
           npm run archive
       - name: Re-build docs after versioning
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PUBLISH: 1
         run: |
           npm run docs

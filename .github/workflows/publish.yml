@@ -2,6 +2,10 @@ name: Publish
 
 permissions: read-all
 
+# TODO: Remove this once all third-party actions natively support Node 24+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 on:
   workflow_dispatch:
   push:
@@ -31,7 +35,8 @@ jobs:
         run: npm install -g npm@latest
       - name: Install dependencies
         run: npm ci
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PUPPETEER_SKIP_DOWNLOAD: true
       - name: Build packages
         run: npm run build
@@ -40,7 +45,8 @@ jobs:
           npm publish --provenance --access public --workspace packages/${GITHUB_REF_NAME%-v*}
       - name: Deprecate old Puppeteer versions
         if: ${{ startsWith(github.ref_name, 'puppeteer-v') }}
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN_PUPPETEER}}
         run: |
           npm config set '//wombat-dressing-room.appspot.com/:_authToken' $NODE_AUTH_TOKEN
@@ -53,7 +59,8 @@ jobs:
     permissions:
       contents: read
       packages: write
-    env:
+    # TODO: Remove this once all third-party actions natively support Node 24+
+env:
       REGISTRY: ghcr.io
       IMAGE_NAME: ${{ github.repository }}
     steps:
@@ -68,7 +75,8 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Install dependencies
         run: npm ci
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           PUPPETEER_SKIP_DOWNLOAD: true
       - name: Build packages
         run: npm run build

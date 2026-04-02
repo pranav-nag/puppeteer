@@ -4,6 +4,10 @@ name: 'Update the pinned browsers'
 
 permissions: read-all
 
+# TODO: Remove this once all third-party actions natively support Node 24+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 on:
   schedule:
     # Run everyday at: https://crontab.guru/#0_6_*_*_*.
@@ -30,7 +34,8 @@ jobs:
         id: update
         run: |
           node tools/update_browser_revision.mjs
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           BROWSER_TO_UPDATE: 'chrome'
       - name: Create Pull Request
         if: ${{ steps.update.outputs.commit }}
@@ -66,7 +71,8 @@ jobs:
         id: update
         run: |
           node tools/update_browser_revision.mjs
-        env:
+        # TODO: Remove this once all third-party actions natively support Node 24+
+env:
           BROWSER_TO_UPDATE: 'firefox'
       - name: Create Pull Request
         if: ${{ steps.update.outputs.commit }}

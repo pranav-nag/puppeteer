@@ -8,6 +8,10 @@ on:
 # Declare default permissions as read only.
 permissions: read-all
 
+# TODO: Remove this once all third-party actions natively support Node 24+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   stale:
     runs-on: ubuntu-latest
