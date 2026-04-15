@@ -1629,6 +1629,29 @@ export abstract class ElementHandle<
 }
 
 /**
+ * Supported autofill address field names.
+ *
+ * @public
+ */
+export const enum AutofillAddressField {
+  NameFirst = 'NAME_FIRST',
+  NameMiddle = 'NAME_MIDDLE',
+  NameLast = 'NAME_LAST',
+  NameFull = 'NAME_FULL',
+  EmailAddress = 'EMAIL_ADDRESS',
+  PhoneHomeNumber = 'PHONE_HOME_NUMBER',
+  PhoneHomeCityAndNumber = 'PHONE_HOME_CITY_AND_NUMBER',
+  PhoneHomeWholeNumber = 'PHONE_HOME_WHOLE_NUMBER',
+  AddressHomeLine1 = 'ADDRESS_HOME_LINE1',
+  AddressHomeLine2 = 'ADDRESS_HOME_LINE2',
+  AddressHomeStreetAddress = 'ADDRESS_HOME_STREET_ADDRESS',
+  AddressHomeCity = 'ADDRESS_HOME_CITY',
+  AddressHomeState = 'ADDRESS_HOME_STATE',
+  AddressHomeZip = 'ADDRESS_HOME_ZIP',
+  AddressHomeCountry = 'ADDRESS_HOME_COUNTRY',
+}
+
+/**
  * @public
  */
 export type AutofillData =
@@ -1656,23 +1679,7 @@ export type AutofillData =
            * See {@link https://source.chromium.org/chromium/chromium/src/+/main:components/autofill/core/browser/field_types.cc}
            * for the full list of supported fields.
            */
-          name:
-            | 'NAME_FIRST'
-            | 'NAME_MIDDLE'
-            | 'NAME_LAST'
-            | 'NAME_FULL'
-            | 'EMAIL_ADDRESS'
-            | 'PHONE_HOME_NUMBER'
-            | 'PHONE_HOME_CITY_AND_NUMBER'
-            | 'PHONE_HOME_WHOLE_NUMBER'
-            | 'ADDRESS_HOME_LINE1'
-            | 'ADDRESS_HOME_LINE2'
-            | 'ADDRESS_HOME_STREET_ADDRESS'
-            | 'ADDRESS_HOME_CITY'
-            | 'ADDRESS_HOME_STATE'
-            | 'ADDRESS_HOME_ZIP'
-            | 'ADDRESS_HOME_COUNTRY'
-            | (string & Record<never, never>);
+          name: AutofillAddressField | (string & Record<never, never>);
           value: string;
         }>;
       };
